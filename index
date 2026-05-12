@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Alignment Record — MWA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════
+   DESIGN SYSTEM — Industrial / Technical Aesthetic
+   Inspired by engineering documentation & precision tools
+════════════════════════════════════════════════════*/
+:root {
+  --bg: #f5f7fa;
+  --bg2: #ffffff;
+  --bg3: #f0f2f5;
+  --border: #dde1e7;
+  --border-bright: #bcc1ca;
+  --text: #1a1f2e;
+  --text2: #5a6478;
+  --text3: #9099aa;
+  --accent: #1a6fdb;
+  --accent-bright: #1558b0;
+  --accent-glow: rgba(26, 111, 219, 0.15);
+  --green: #1a7f3c;
+  --green-bright: #1e9447;
+  --green-text: #1a7f3c;
+  --red: #c92b2b;
+  --red-text: #c92b2b;
+  --yellow: #8a6000;
+  --yellow-text: #8a6000;
+  --font-main: 'IBM Plex Sans Thai', 'Sarabun', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --radius: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg3); }
+::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+/* ── Utility ── */
+.hidden { display: none !important; }
+.flex { display: flex; }
+.gap-8 { gap: 8px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.text-mono { font-family: var(--font-mono); }
+
+/* ═══════════════════════════════════════════════════
+   LOGIN PAGE
+════════════════════════════════════════════════════*/
+#login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(26,111,219,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(26,127,60,0.04) 0%, transparent 50%),
+    var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+#login-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.5;
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow), 0 0 60px rgba(26,111,219,0.06);
+  animation: cardIn 0.5s ease;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.login-logo-icon {
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--accent), #0d5bcc);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.login-logo-text h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+.login-logo-text p { font-size: 12px; color: var(--text2); font-family: var(--font-mono); }
+
+.login-subtitle {
+  font-size: 22px; font-weight: 600;
+  margin-bottom: 8px;
+}
+.login-desc { color: var(--text2); font-size: 13px; margin-bottom: 28px; }
+
+.form-group { margin-bottom: 16px; }
+.form-label {
+  display: block; font-size: 12px; font-weight: 500;
+  color: var(--text2); margin-bottom: 6px;
+  letter-spacing: 0.5px; text-transform: uppercase;
+}
+.form-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.form-input::placeholder { color: var(--text3); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 20px; border-radius: var(--radius);
+  font-family: var(--font-main); font-size: 14px; font-weight: 500;
+  border: none; cursor: pointer; transition: all 0.2s;
+  text-decoration: none; white-space: nowrap;
+}
+.btn-primary {
+  background: var(--accent); color: #fff; width: 100%;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(31,111,235,0.4);
+}
+.btn-primary:hover { background: var(--accent-bright); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(31,111,235,0.5); }
+.btn-primary:active { transform: translateY(0); }
+.btn-secondary {
+  background: var(--bg3); color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { border-color: var(--border-bright); background: var(--bg2); }
+.btn-danger { background: var(--red); color: #fff; }
+.btn-success { background: var(--green-bright); color: #fff; }
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+.btn-icon { padding: 8px; border-radius: var(--radius); }
+
+.error-msg {
+  background: rgba(201,43,43,0.08); border: 1px solid rgba(201,43,43,0.25);
+  color: var(--red-text); padding: 10px 14px; border-radius: var(--radius);
+  font-size: 13px; margin-top: 12px;
+}
+
+/* ═══════════════════════════════════════════════════
+   MAIN LAYOUT
+════════════════════════════════════════════════════*/
+#app { display: flex; min-height: 100vh; flex-direction: column; }
+
+/* ── Top Nav ── */
+.topnav {
+  height: 56px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 24px;
+  gap: 16px; position: sticky; top: 0; z-index: 100;
+  justify-content: space-between;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; }
+.nav-brand-icon {
+  width: 30px; height: 30px;
+  background: linear-gradient(135deg, var(--accent), #0d5bcc);
+  border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 15px;
+}
+.nav-tabs { display: flex; gap: 4px; }
+.nav-tab {
+  padding: 6px 16px; border-radius: var(--radius);
+  color: var(--text2); cursor: pointer; font-size: 13px; font-weight: 500;
+  transition: all 0.2s; border: 1px solid transparent;
+  display: flex; align-items: center; gap: 6px;
+}
+.nav-tab:hover { color: var(--text); background: var(--bg3); }
+.nav-tab.active { color: var(--accent-bright); background: rgba(26,111,219,0.1); border-color: rgba(26,111,219,0.3); }
+.nav-user { display: flex; align-items: center; gap: 10px; }
+.nav-user-badge {
+  background: rgba(26,127,60,0.12); border: 1px solid rgba(26,127,60,0.35);
+  color: var(--green-text); padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-family: var(--font-mono);
+}
+
+/* ── Page Content ── */
+.page { flex: 1; padding: 24px; display: none; animation: fadeIn 0.3s ease; }
+.page.active { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ═══════════════════════════════════════════════════
+   DASHBOARD
+════════════════════════════════════════════════════*/
+.page-header { margin-bottom: 24px; }
+.page-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.page-subtitle { color: var(--text2); font-size: 13px; }
+
+.stats-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.stat-card {
+  background: #ffffff; border: 1px solid var(--border); border-radius: 10px;
+  padding: 20px 24px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.stat-card:hover { border-color: var(--border-bright); transform: translateY(-2px); }
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.stat-card.blue::before { background: linear-gradient(90deg, var(--accent), var(--accent-bright)); }
+.stat-card.green::before { background: linear-gradient(90deg, var(--green), var(--green-bright)); }
+.stat-card.red::before { background: linear-gradient(90deg, var(--red), #f85149); }
+.stat-card.yellow::before { background: linear-gradient(90deg, var(--yellow), var(--yellow-text)); }
+
+.stat-label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; font-weight: 500; }
+.stat-value { font-size: 32px; font-weight: 700; font-family: var(--font-mono); line-height: 1; }
+.stat-card.blue .stat-value { color: var(--accent); }
+.stat-card.green .stat-value { color: var(--green-text); }
+.stat-card.red .stat-value { color: var(--red-text); }
+.stat-card.yellow .stat-value { color: var(--yellow-text); }
+.stat-icon { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 32px; opacity: 0.15; }
+
+.dashboard-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;
+}
+@media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
+
+.panel {
+  background: #ffffff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+}
+.panel-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  font-weight: 600; font-size: 14px;
+}
+.panel-body { padding: 20px; }
+
+/* Bar chart */
+.bar-row { margin-bottom: 12px; }
+.bar-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+.bar-label span:last-child { color: var(--text2); font-family: var(--font-mono); }
+.bar-track { height: 8px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+.bar-fill.good { background: linear-gradient(90deg, var(--green), var(--green-bright)); }
+.bar-fill.bad { background: linear-gradient(90deg, var(--red), #f85149); }
+
+/* Donut chart */
+.donut-wrap { display: flex; align-items: center; gap: 20px; }
+.donut-svg { flex-shrink: 0; }
+.donut-legend { flex: 1; }
+.legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 13px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── Table ── */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  padding: 10px 14px; text-align: left; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.5px; color: var(--text2);
+  border-bottom: 1px solid var(--border); white-space: nowrap; font-weight: 500;
+}
+td { padding: 10px 14px; border-bottom: 1px solid rgba(48,54,61,0.5); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; font-family: var(--font-mono);
+}
+.badge-green { background: rgba(26,127,60,0.12); color: var(--green-text); border: 1px solid rgba(26,127,60,0.3); }
+.badge-red { background: rgba(201,43,43,0.1); color: var(--red-text); border: 1px solid rgba(201,43,43,0.25); }
+.badge-yellow { background: rgba(138,96,0,0.1); color: var(--yellow-text); border: 1px solid rgba(138,96,0,0.3); }
+.badge-blue { background: rgba(26,111,219,0.1); color: var(--accent-bright); border: 1px solid rgba(26,111,219,0.25); }
+
+/* Filter bar */
+.filter-bar {
+  display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;
+}
+.filter-select {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 7px 12px; color: var(--text); font-family: var(--font-main); font-size: 13px;
+  outline: none; cursor: pointer;
+}
+.filter-select:focus { border-color: var(--accent); }
+
+/* ═══════════════════════════════════════════════════
+   FORM PAGE
+════════════════════════════════════════════════════*/
+.form-container { max-width: 900px; }
+
+/* Equipment selector */
+.equip-selector {
+  background: #ffffff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  margin-bottom: 20px;
+}
+.equip-selector-header {
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+  font-weight: 600; display: flex; align-items: center; gap: 8px;
+}
+.equip-selector-body { padding: 20px; }
+.equip-search {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 9px 14px;
+  color: var(--text); font-family: var(--font-main); font-size: 14px;
+  outline: none; margin-bottom: 12px;
+}
+.equip-search:focus { border-color: var(--accent); }
+.equip-list { max-height: 220px; overflow-y: auto; }
+.equip-item {
+  padding: 10px 14px; border-radius: var(--radius); cursor: pointer;
+  transition: background 0.15s; display: flex; align-items: center;
+  justify-content: space-between; gap: 12px;
+}
+.equip-item:hover { background: var(--bg3); }
+.equip-item.selected { background: rgba(26,111,219,0.1); border: 1px solid rgba(26,111,219,0.3); }
+.equip-item-name { font-size: 13px; font-weight: 500; }
+.equip-item-meta { font-size: 11px; color: var(--text2); font-family: var(--font-mono); }
+
+/* Selected equipment info */
+.equip-info-card {
+  background: rgba(26,111,219,0.06); border: 1px solid rgba(31,111,235,0.2);
+  border-radius: var(--radius); padding: 12px 16px;
+  display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.equip-info-item { font-size: 12px; }
+.equip-info-item strong { display: block; color: var(--text2); margin-bottom: 2px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+.equip-info-item span { font-family: var(--font-mono); font-size: 13px; color: var(--accent-bright); }
+
+/* Alignment data grid */
+.align-section {
+  background: #ffffff; border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; margin-bottom: 16px;
+}
+.align-section-header {
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  font-weight: 600; font-size: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.align-section-header .section-badge {
+  padding: 2px 8px; background: var(--bg3); border-radius: 4px;
+  font-size: 11px; color: var(--text2); font-family: var(--font-mono);
+}
+.align-body { padding: 20px; }
+.align-grid { display: grid; grid-template-columns: auto 1fr 1fr; gap: 12px; align-items: center; }
+.align-grid-header { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); font-weight: 500; }
+.align-label { font-size: 13px; font-weight: 500; padding-right: 16px; }
+
+.num-input {
+  width: 100%;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 9px 12px;
+  color: var(--text); font-family: var(--font-mono); font-size: 14px;
+  outline: none; text-align: right; transition: border-color 0.2s;
+}
+.num-input:focus { border-color: var(--accent); }
+.num-input.warn { border-color: var(--yellow-text); }
+.num-input.fail { border-color: var(--red-text); }
+
+/* OCR panel */
+.ocr-panel {
+  background: #ffffff; border: 1px solid var(--border); border-radius: 10px;
+  overflow: hidden; margin-bottom: 16px;
+}
+.ocr-header {
+  padding: 14px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.ocr-body { padding: 20px; }
+.ocr-drop {
+  border: 2px dashed var(--border); border-radius: 8px; padding: 32px;
+  text-align: center; cursor: pointer; transition: all 0.2s;
+  color: var(--text2);
+}
+.ocr-drop:hover { border-color: var(--accent); color: var(--accent-bright); background: var(--accent-glow); }
+.ocr-drop.drag-over { border-color: var(--accent-bright); background: rgba(31,111,235,0.15); }
+.ocr-drop-icon { font-size: 36px; margin-bottom: 8px; }
+.ocr-preview { max-width: 100%; max-height: 200px; border-radius: 6px; border: 1px solid var(--border); display: block; margin: 0 auto 12px; }
+.ocr-status {
+  padding: 10px 14px; border-radius: var(--radius); font-size: 13px;
+  background: rgba(26,111,219,0.08); border: 1px solid rgba(26,111,219,0.2);
+  color: var(--accent-bright); display: flex; align-items: center; gap: 8px;
+}
+.spinner {
+  width: 16px; height: 16px; border: 2px solid var(--border);
+  border-top-color: var(--accent-bright); border-radius: 50%;
+  animation: spin 0.8s linear infinite; flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Judgement display */
+.judgement-bar {
+  display: flex; gap: 12px; padding: 16px 20px;
+  background: #ffffff; border: 1px solid var(--border);
+  border-radius: 10px; margin-bottom: 16px; align-items: center;
+}
+.judgement-label { font-size: 13px; font-weight: 600; flex: 1; }
+.judgement-result { font-size: 18px; font-weight: 700; font-family: var(--font-mono); }
+.judgement-result.pass { color: var(--green-text); }
+.judgement-result.fail { color: var(--red-text); }
+
+/* ═══════════════════════════════════════════════════
+   DIAGRAM (Alignment diagram from form)
+════════════════════════════════════════════════════*/
+.diagram-svg { width: 100%; max-width: 480px; display: block; margin: 0 auto 16px; }
+
+/* ═══════════════════════════════════════════════════
+   LOADING
+════════════════════════════════════════════════════*/
+.loader-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(245,247,250,0.88);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+}
+.loader-ring {
+  width: 48px; height: 48px; border: 3px solid var(--border);
+  border-top-color: var(--accent); border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+.loader-text { color: var(--text2); font-size: 14px; }
+
+/* ── Toast ── */
+.toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9000; display: flex; flex-direction: column; gap: 8px; }
+.toast {
+  background: #ffffff; border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px 18px;
+  box-shadow: var(--shadow); font-size: 13px;
+  display: flex; align-items: center; gap: 10px;
+  animation: toastIn 0.3s ease; max-width: 340px;
+}
+@keyframes toastIn { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+.toast.success { border-color: rgba(35,134,54,0.4); }
+.toast.error { border-color: rgba(218,54,51,0.4); }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .nav-tabs .nav-tab span.label { display: none; }
+  .login-card { margin: 16px; padding: 28px 24px; }
+  .align-grid { grid-template-columns: auto 1fr 1fr; gap: 8px; }
+}
+
+/* ── Step Wizard ── */
+.step-bar {
+  display: flex; gap: 0; margin-bottom: 24px;
+  background: #ffffff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+}
+.step-item {
+  flex: 1; padding: 14px 12px; text-align: center; font-size: 12px;
+  border-right: 1px solid var(--border); cursor: pointer;
+  transition: background 0.2s; color: var(--text2);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+}
+.step-item:last-child { border-right: none; }
+.step-item.done { color: var(--green-text); background: rgba(35,134,54,0.08); }
+.step-item.active { color: var(--accent-bright); background: rgba(31,111,235,0.1); }
+.step-num {
+  width: 22px; height: 22px; border-radius: 50%; border: 2px solid currentColor;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+}
+
+.form-step { display: none; }
+.form-step.active { display: block; }
+
+/* Signature area */
+.sig-placeholder {
+  height: 60px; background: var(--bg3); border: 1px dashed var(--border);
+  border-radius: var(--radius); display: flex; align-items: center; justify-content: center;
+  color: var(--text3); font-size: 12px; margin-top: 6px;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ LOADER ═══ -->
+<div class="loader-overlay" id="loader">
+  <div class="loader-ring"></div>
+  <div class="loader-text">กำลังโหลด...</div>
+</div>
+
+<!-- ═══ TOAST CONTAINER ═══ -->
+<div class="toast-container" id="toasts"></div>
+
+<!-- ═══════════════════════════════════════════════
+     LOGIN PAGE
+════════════════════════════════════════════════ -->
+<div id="login-page" class="hidden">
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-logo-icon">⚙️</div>
+      <div class="login-logo-text">
+        <h1>Alignment Record</h1>
+        <p>MWA · FR-BK-9070-WPS1</p>
+      </div>
+    </div>
+    <div class="login-subtitle">เข้าสู่ระบบ</div>
+    <div class="login-desc">ใช้รหัสพนักงาน (EmID) และรหัสผ่านของคุณ</div>
+    <div class="form-group">
+      <label class="form-label">รหัสพนักงาน (EmID)</label>
+      <input type="text" class="form-input" id="login-emid" placeholder="เช่น EMP001" autocomplete="username"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">รหัสผ่าน</label>
+      <input type="password" class="form-input" id="login-pw" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+    <button class="btn btn-primary" id="login-btn" onclick="doLogin()">เข้าสู่ระบบ</button>
+    <div id="login-error" class="error-msg hidden"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN APP
+════════════════════════════════════════════════ -->
+<div id="app" class="hidden">
+  <!-- Top Nav -->
+  <nav class="topnav">
+    <div class="nav-brand">
+      <div class="nav-brand-icon">⚙️</div>
+      Alignment Record
+    </div>
+    <div class="nav-tabs">
+      <div class="nav-tab active" onclick="showPage('dashboard')" id="tab-dashboard">
+        <span>📊</span><span class="label">Dashboard</span>
+      </div>
+      <div class="nav-tab" onclick="showPage('form')" id="tab-form">
+        <span>📝</span><span class="label">บันทึกข้อมูล</span>
+      </div>
+      <div class="nav-tab" onclick="showPage('records')" id="tab-records">
+        <span>📋</span><span class="label">ประวัติ</span>
+      </div>
+    </div>
+    <div class="nav-user">
+      <div class="nav-user-badge" id="user-badge">INSPECTOR</div>
+      <span id="user-name" style="font-size:13px;color:var(--text2);"></span>
+      <button class="btn btn-secondary btn-sm" onclick="logout()">ออกจากระบบ</button>
+    </div>
+  </nav>
+
+  <!-- ─── DASHBOARD PAGE ─── -->
+  <div class="page active" id="page-dashboard">
+    <div class="page-header flex justify-between items-center">
+      <div>
+        <div class="page-title">📊 Dashboard</div>
+        <div class="page-subtitle">ภาพรวมการตรวจสอบ Alignment</div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="loadDashboard()">🔄 รีเฟรช</button>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card blue">
+        <div class="stat-label">ทั้งหมด</div>
+        <div class="stat-value" id="stat-total">–</div>
+        <div class="stat-icon">📊</div>
+      </div>
+      <div class="stat-card green">
+        <div class="stat-label">Acceptable</div>
+        <div class="stat-value" id="stat-ok">–</div>
+        <div class="stat-icon">✅</div>
+      </div>
+      <div class="stat-card red">
+        <div class="stat-label">Unacceptable</div>
+        <div class="stat-value" id="stat-fail">–</div>
+        <div class="stat-icon">❌</div>
+      </div>
+      <div class="stat-card yellow">
+        <div class="stat-label">อัตราผ่าน (%)</div>
+        <div class="stat-value" id="stat-rate">–</div>
+        <div class="stat-icon">📈</div>
+      </div>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="panel">
+        <div class="panel-header">📍 ผลรายสถานี</div>
+        <div class="panel-body" id="station-bars">
+          <div style="color:var(--text3);font-size:13px;text-align:center;padding:20px">กำลังโหลด...</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">🍩 สัดส่วนผลการตรวจ</div>
+        <div class="panel-body">
+          <div class="donut-wrap">
+            <svg class="donut-svg" width="120" height="120" viewBox="0 0 120 120" id="donut-svg">
+              <circle cx="60" cy="60" r="48" fill="none" stroke="var(--bg3)" stroke-width="16"/>
+              <circle cx="60" cy="60" r="48" fill="none" stroke="var(--green-bright)" stroke-width="16"
+                stroke-dasharray="0 301.6" stroke-linecap="round" transform="rotate(-90 60 60)"
+                id="donut-ok" style="transition:stroke-dasharray 1s ease"/>
+              <circle cx="60" cy="60" r="48" fill="none" stroke="var(--red)" stroke-width="16"
+                stroke-dasharray="0 301.6" stroke-linecap="round" transform="rotate(-90 60 60)"
+                id="donut-fail" style="transition:stroke-dasharray 1s ease 0.5s"/>
+              <text x="60" y="55" text-anchor="middle" fill="#1a1f2e" font-size="18" font-family="IBM Plex Mono,monospace" font-weight="700" id="donut-pct">–</text>
+              <text x="60" y="70" text-anchor="middle" fill="#5a6478" font-size="9" font-family="IBM Plex Sans Thai,sans-serif">อัตราผ่าน</text>
+            </svg>
+            <div class="donut-legend">
+              <div class="legend-item">
+                <div class="legend-dot" style="background:var(--green-bright)"></div>
+                <span>Acceptable: <strong id="legend-ok">–</strong></span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background:var(--red)"></div>
+                <span>Unacceptable: <strong id="legend-fail">–</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">🕐 รายการล่าสุด</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>เลขที่เอกสาร</th>
+              <th>วันที่</th>
+              <th>สถานที่</th>
+              <th>อุปกรณ์</th>
+              <th>AV Angular</th>
+              <th>AV Offset</th>
+              <th>AH Angular</th>
+              <th>AH Offset</th>
+              <th>ผล</th>
+            </tr>
+          </thead>
+          <tbody id="recent-table">
+            <tr><td colspan="9" style="text-align:center;color:var(--text3);padding:20px">กำลังโหลด...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── FORM PAGE ─── -->
+  <div class="page" id="page-form">
+    <div class="form-container">
+      <div class="page-header">
+        <div class="page-title">📝 บันทึก Alignment Record</div>
+        <div class="page-subtitle">Station TPS3 · FR-BK-9070-WPS1-007</div>
+      </div>
+
+      <!-- Step bar -->
+      <div class="step-bar">
+        <div class="step-item active" id="step-tab-1" onclick="goStep(1)">
+          <div class="step-num">1</div><span>เลือกอุปกรณ์</span>
+        </div>
+        <div class="step-item" id="step-tab-2" onclick="goStep(2)">
+          <div class="step-num">2</div><span>ข้อมูล Before</span>
+        </div>
+        <div class="step-item" id="step-tab-3" onclick="goStep(3)">
+          <div class="step-num">3</div><span>ข้อมูล After</span>
+        </div>
+        <div class="step-item" id="step-tab-4" onclick="goStep(4)">
+          <div class="step-num">4</div><span>ยืนยัน</span>
+        </div>
+      </div>
+
+      <!-- Step 1: Select Equipment -->
+      <div class="form-step active" id="form-step-1">
+        <div class="equip-selector">
+          <div class="equip-selector-header">🔧 เลือกอุปกรณ์</div>
+          <div class="equip-selector-body">
+            <input type="text" class="equip-search" placeholder="🔍 ค้นหา ชื่ออุปกรณ์ หรือ สถานที่..." id="equip-search" oninput="filterEquip()"/>
+            <div class="equip-list" id="equip-list">
+              <div style="color:var(--text3);text-align:center;padding:16px;font-size:13px">กำลังโหลด...</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="equip-info-card hidden" id="equip-info-card">
+          <div class="equip-info-item"><strong>สถานที่</strong><span id="info-station">–</span></div>
+          <div class="equip-info-item"><strong>หมายเลข</strong><span id="info-no">–</span></div>
+          <div class="equip-info-item"><strong>ประเภท</strong><span id="info-type">–</span></div>
+          <div class="equip-info-item"><strong>Limit Angular</strong><span id="info-lim-ang">–</span> mm</div>
+          <div class="equip-info-item"><strong>Limit Offset</strong><span id="info-lim-off">–</span> mm</div>
+          <div class="equip-info-item"><strong>Footer</strong><span id="info-footer">–</span></div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:8px">
+          <button class="btn btn-primary" onclick="goStep(2)" style="flex:1" id="step1-next" disabled>ถัดไป →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Before Alignment -->
+      <div class="form-step" id="form-step-2">
+        <!-- OCR Section -->
+        <div class="ocr-panel">
+          <div class="ocr-header">
+            <div style="font-weight:600;display:flex;align-items:center;gap:8px">📷 OCR จากภาพ <span class="badge badge-blue">ทางเลือก</span></div>
+            <label class="btn btn-secondary btn-sm" style="cursor:pointer">
+              📷 ถ่ายรูป / อัปโหลด
+              <input type="file" id="ocr-file-before" accept="image/*" capture="environment" class="hidden" onchange="handleOCR(this,'before')"/>
+            </label>
+          </div>
+          <div class="ocr-body">
+            <div class="ocr-drop" id="ocr-drop-before" ondrop="handleDrop(event,'before')" ondragover="e=>{e.preventDefault();document.getElementById('ocr-drop-before').classList.add('drag-over')}" ondragleave="document.getElementById('ocr-drop-before').classList.remove('drag-over')">
+              <div class="ocr-drop-icon">🖼️</div>
+              <div style="font-size:13px;font-weight:500">ลากรูปหรือคลิก</div>
+              <div style="font-size:12px;margin-top:4px">รองรับรูปจากเครื่อง ROTALIGN® Ultra iS</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="align-section">
+          <div class="align-section-header">
+            📐 Before Alignment
+            <span class="section-badge">กรอกข้อมูลก่อนปรับ</span>
+          </div>
+          <div class="align-body">
+            <div class="align-grid">
+              <div class="align-grid-header"></div>
+              <div class="align-grid-header">Angular (mm)</div>
+              <div class="align-grid-header">Offset (mm)</div>
+
+              <div class="align-label">Vertical</div>
+              <input class="num-input" id="bv-ang" type="number" step="0.01" placeholder="0.00" oninput="liveJudge()"/>
+              <input class="num-input" id="bv-off" type="number" step="0.01" placeholder="0.00" oninput="liveJudge()"/>
+
+              <div class="align-label">Horizontal</div>
+              <input class="num-input" id="bh-ang" type="number" step="0.01" placeholder="0.00" oninput="liveJudge()"/>
+              <input class="num-input" id="bh-off" type="number" step="0.01" placeholder="0.00" oninput="liveJudge()"/>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:8px">
+          <button class="btn btn-secondary" onclick="goStep(1)" style="flex:0 0 auto">← ย้อนกลับ</button>
+          <button class="btn btn-primary" onclick="goStep(3)" style="flex:1">ถัดไป →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: After Alignment -->
+      <div class="form-step" id="form-step-3">
+        <div class="ocr-panel">
+          <div class="ocr-header">
+            <div style="font-weight:600;display:flex;align-items:center;gap:8px">📷 OCR จากภาพ <span class="badge badge-blue">ทางเลือก</span></div>
+            <label class="btn btn-secondary btn-sm" style="cursor:pointer">
+              📷 ถ่ายรูป / อัปโหลด
+              <input type="file" id="ocr-file-after" accept="image/*" capture="environment" class="hidden" onchange="handleOCR(this,'after')"/>
+            </label>
+          </div>
+          <div class="ocr-body">
+            <div class="ocr-drop" id="ocr-drop-after" ondrop="handleDrop(event,'after')" ondragover="e=>{e.preventDefault();document.getElementById('ocr-drop-after').classList.add('drag-over')}" ondragleave="document.getElementById('ocr-drop-after').classList.remove('drag-over')">
+              <div class="ocr-drop-icon">🖼️</div>
+              <div style="font-size:13px;font-weight:500">ลากรูปหรือคลิก</div>
+              <div style="font-size:12px;margin-top:4px">รองรับรูปจากเครื่อง ROTALIGN® Ultra iS</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="align-section">
+          <div class="align-section-header">
+            ✅ After Alignment
+            <span class="section-badge">กรอกข้อมูลหลังปรับ</span>
+          </div>
+          <div class="align-body">
+            <div class="align-grid">
+              <div class="align-grid-header"></div>
+              <div class="align-grid-header">Angular (mm)</div>
+              <div class="align-grid-header">Offset (mm)</div>
+
+              <div class="align-label">Vertical</div>
+              <input class="num-input" id="av-ang" type="number" step="0.01" placeholder="0.00" oninput="liveJudge()"/>
+              <input class="num-input" id="av-off" type="number" step="0.01" placeholder="0.00" oninput="liveJudge()"/>
+
+              <div class="align-label">Horizontal</div>
+              <input class="num-input" id="ah-ang" type="number" step="0.01" placeholder="0.00" oninput="liveJudge()"/>
+              <input class="num-input" id="ah-off" type="number" step="0.01" placeholder="0.00" oninput="liveJudge()"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Judgement -->
+        <div class="judgement-bar" id="judgement-bar">
+          <div style="font-size:22px">⚖️</div>
+          <div class="judgement-label">
+            <div style="font-size:11px;color:var(--text2);margin-bottom:2px">JUDGEMENT (After)</div>
+            <div id="judgement-detail" style="font-size:12px;color:var(--text2)">กรอกข้อมูลเพื่อคำนวณ</div>
+          </div>
+          <div class="judgement-result" id="judgement-text">–</div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:8px">
+          <button class="btn btn-secondary" onclick="goStep(2)" style="flex:0 0 auto">← ย้อนกลับ</button>
+          <button class="btn btn-primary" onclick="goStep(4)" style="flex:1">ถัดไป →</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Confirm -->
+      <div class="form-step" id="form-step-4">
+        <div class="align-section">
+          <div class="align-section-header">📋 สรุปข้อมูลก่อนบันทึก</div>
+          <div class="align-body" id="summary-body" style="font-size:13px;line-height:2"></div>
+        </div>
+
+        <div class="align-section" style="margin-top:0">
+          <div class="align-section-header">👤 ผู้ตรวจวัดและผู้อนุมัติ</div>
+          <div class="align-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+              <div>
+                <label class="form-label">ผู้ตรวจวัด</label>
+                <select class="filter-select" id="sel-inspector" style="width:100%"></select>
+                <div class="sig-placeholder" id="sig-inspector">ลายเซ็น</div>
+              </div>
+              <div>
+                <label class="form-label">ผู้อนุมัติ</label>
+                <select class="filter-select" id="sel-approver" style="width:100%"></select>
+                <div class="sig-placeholder" id="sig-approver">ลายเซ็น</div>
+              </div>
+            </div>
+            <div style="margin-top:16px">
+              <label class="form-label">หมายเหตุ</label>
+              <textarea class="form-input" id="remark" rows="2" style="resize:vertical" placeholder="หมายเหตุเพิ่มเติม (ถ้ามี)"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:8px">
+          <button class="btn btn-secondary" onclick="goStep(3)" style="flex:0 0 auto">← ย้อนกลับ</button>
+          <button class="btn btn-success" onclick="submitRecord()" style="flex:1;font-weight:700">💾 บันทึกข้อมูล</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── RECORDS PAGE ─── -->
+  <div class="page" id="page-records">
+    <div class="page-header flex justify-between items-center">
+      <div>
+        <div class="page-title">📋 ประวัติการตรวจ</div>
+        <div class="page-subtitle">รายการ Alignment Record ทั้งหมด</div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="loadRecords()">🔄 รีเฟรช</button>
+    </div>
+
+    <div class="filter-bar">
+      <select class="filter-select" id="f-station" onchange="applyFilters()">
+        <option value="">📍 ทุกสถานที่</option>
+      </select>
+      <select class="filter-select" id="f-result" onchange="applyFilters()">
+        <option value="">⚖️ ทุกผล</option>
+        <option value="Acceptable">✅ Acceptable</option>
+        <option value="Unacceptable">❌ Unacceptable</option>
+      </select>
+      <input type="text" class="filter-select" id="f-search" placeholder="🔍 ค้นหา..." oninput="applyFilters()" style="flex:1;min-width:150px"/>
+    </div>
+
+    <div class="panel">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>เลขที่เอกสาร</th>
+              <th>วันที่</th>
+              <th>สถานที่</th>
+              <th>อุปกรณ์</th>
+              <th>Name</th>
+              <th>BV Ang</th>
+              <th>BV Off</th>
+              <th>AV Ang</th>
+              <th>AV Off</th>
+              <th>AH Ang</th>
+              <th>AH Off</th>
+              <th>ผล</th>
+              <th>ผู้ตรวจ</th>
+            </tr>
+          </thead>
+          <tbody id="records-table">
+            <tr><td colspan="13" style="text-align:center;color:var(--text3);padding:20px">กำลังโหลด...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════ -->
+<script>
+// ─── CONFIG ────────────────────────────────────────────────
+// Replace with your deployed Google Apps Script URL
+const GAS_URL = 'YOUR_GOOGLE_APPS_SCRIPT_DEPLOYMENT_URL';
+
+// ─── STATE ─────────────────────────────────────────────────
+let currentUser = null;
+let allEquipment = [];
+let allRecords = [];
+let selectedEquip = null;
+let currentStep = 1;
+
+// ─── INIT ──────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = sessionStorage.getItem('align_user');
+  if (saved) {
+    currentUser = JSON.parse(saved);
+    showApp();
+  } else {
+    showLogin();
+  }
+});
+
+function showLogin() {
+  document.getElementById('loader').classList.add('hidden');
+  document.getElementById('login-page').classList.remove('hidden');
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('login-emid').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  document.getElementById('login-pw').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+}
+
+function showApp() {
+  document.getElementById('login-page').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('user-name').textContent = currentUser.name;
+  document.getElementById('user-badge').textContent = currentUser.role === 'approver' ? 'APPROVER' : 'INSPECTOR';
+  document.getElementById('loader').classList.add('hidden');
+  loadDashboard();
+  loadEquipment();
+  loadInspectors();
+}
+
+// ─── AUTH ──────────────────────────────────────────────────
+async function doLogin() {
+  const emid = document.getElementById('login-emid').value.trim();
+  const pw   = document.getElementById('login-pw').value;
+  const errEl = document.getElementById('login-error');
+  const btn   = document.getElementById('login-btn');
+
+  if (!emid || !pw) { showError(errEl, 'กรุณากรอกรหัสพนักงานและรหัสผ่าน'); return; }
+
+  btn.textContent = 'กำลังตรวจสอบ...'; btn.disabled = true;
+  errEl.classList.add('hidden');
+
+  try {
+    const res = await gasCall('login', { emId: emid, password: pw });
+    if (res.ok) {
+      currentUser = res;
+      sessionStorage.setItem('align_user', JSON.stringify(res));
+      showApp();
+    } else {
+      showError(errEl, res.message || 'ไม่พบผู้ใช้งาน กรุณาตรวจสอบข้อมูล');
+    }
+  } catch(e) {
+    showError(errEl, 'ไม่สามารถเชื่อมต่อได้ กรุณาตรวจสอบการตั้งค่า');
+    console.error(e);
+  }
+  btn.textContent = 'เข้าสู่ระบบ'; btn.disabled = false;
+}
+
+function logout() {
+  sessionStorage.removeItem('align_user');
+  currentUser = null;
+  showLogin();
+}
+
+function showError(el, msg) { el.textContent = msg; el.classList.remove('hidden'); }
+
+// ─── NAVIGATION ────────────────────────────────────────────
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'records') loadRecords();
+}
+
+// ─── EQUIPMENT ─────────────────────────────────────────────
+async function loadEquipment() {
+  try {
+    allEquipment = await gasCall('getEquipment');
+    renderEquipList(allEquipment);
+  } catch(e) { console.error('Equipment load failed:', e); }
+}
+
+function renderEquipList(list) {
+  const el = document.getElementById('equip-list');
+  if (!list.length) { el.innerHTML = '<div style="color:var(--text3);text-align:center;padding:16px;font-size:13px">ไม่พบข้อมูล</div>'; return; }
+  el.innerHTML = list.map(eq => `
+    <div class="equip-item ${selectedEquip && selectedEquip.No === eq.No ? 'selected' : ''}"
+         onclick="selectEquip(${JSON.stringify(eq).replace(/"/g,'&quot;')})">
+      <div>
+        <div class="equip-item-name">${eq['ชื่ออุปกรณ์'] || eq.Pump || '–'}</div>
+        <div class="equip-item-meta">${eq['สถานที่'] || ''} · No.${eq['หมายเลข'] || eq.No || ''} · ${eq['อุปกรณ์'] || ''}</div>
+      </div>
+      <div class="equip-item-meta">${eq['Limit Angular'] || eq.Limit_Angular || '–'} / ${eq['Limit Offset'] || eq.Limit_Offset || '–'}</div>
+    </div>
+  `).join('');
+}
+
+function filterEquip() {
+  const q = document.getElementById('equip-search').value.toLowerCase();
+  const filtered = allEquipment.filter(eq =>
+    (eq['ชื่ออุปกรณ์'] || '').toLowerCase().includes(q) ||
+    (eq['สถานที่'] || '').toLowerCase().includes(q) ||
+    (eq.Pump || '').toLowerCase().includes(q) ||
+    String(eq['หมายเลข'] || '').includes(q)
+  );
+  renderEquipList(filtered);
+}
+
+function selectEquip(eq) {
+  selectedEquip = eq;
+  const btn = document.getElementById('step1-next');
+  btn.disabled = false;
+
+  document.getElementById('equip-info-card').classList.remove('hidden');
+  document.getElementById('info-station').textContent = eq['สถานที่'] || '–';
+  document.getElementById('info-no').textContent = eq['หมายเลข'] || '–';
+  document.getElementById('info-type').textContent = eq['อุปกรณ์'] || '–';
+  document.getElementById('info-lim-ang').textContent = eq['Limit Angular'] || eq.Limit_Angular || '–';
+  document.getElementById('info-lim-off').textContent = eq['Limit Offset'] || eq.Limit_Offset || '–';
+  document.getElementById('info-footer').textContent = eq['Footer_alig'] || '–';
+
+  renderEquipList(allEquipment); // re-render to highlight
+}
+
+// ─── STEPS ─────────────────────────────────────────────────
+function goStep(n) {
+  if (n > 1 && !selectedEquip) { toast('กรุณาเลือกอุปกรณ์ก่อน', 'error'); return; }
+  if (n === 4) buildSummary();
+
+  document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.step-item').forEach((t, i) => {
+    t.classList.remove('active', 'done');
+    if (i + 1 < n) t.classList.add('done');
+    else if (i + 1 === n) t.classList.add('active');
+  });
+  document.getElementById('form-step-' + n).classList.add('active');
+  currentStep = n;
+}
+
+// ─── LIVE JUDGEMENT ────────────────────────────────────────
+function liveJudge() {
+  if (!selectedEquip) return;
+  const limAng = parseFloat(selectedEquip['Limit Angular'] || selectedEquip.Limit_Angular || 0.1);
+  const limOff = parseFloat(selectedEquip['Limit Offset'] || selectedEquip.Limit_Offset || 0.1);
+
+  const avA = parseFloat(document.getElementById('av-ang').value) || 0;
+  const avO = parseFloat(document.getElementById('av-off').value) || 0;
+  const ahA = parseFloat(document.getElementById('ah-ang').value) || 0;
+  const ahO = parseFloat(document.getElementById('ah-off').value) || 0;
+
+  const pass = Math.abs(avA) <= limAng && Math.abs(avO) <= limOff &&
+               Math.abs(ahA) <= limAng && Math.abs(ahO) <= limOff;
+
+  const jEl = document.getElementById('judgement-text');
+  const dEl = document.getElementById('judgement-detail');
+  jEl.textContent = pass ? 'Acceptable ✅' : 'Unacceptable ❌';
+  jEl.className = 'judgement-result ' + (pass ? 'pass' : 'fail');
+  dEl.textContent = `Limit Angular: ±${limAng} mm | Limit Offset: ±${limOff} mm`;
+
+  // Color inputs
+  [['av-ang', avA, limAng], ['av-off', avO, limOff],
+   ['ah-ang', ahA, limAng], ['ah-off', ahO, limOff]].forEach(([id, val, lim]) => {
+    const el = document.getElementById(id);
+    el.className = 'num-input';
+    if (Math.abs(val) > lim) el.classList.add('fail');
+    else if (Math.abs(val) > lim * 0.8) el.classList.add('warn');
+  });
+}
+
+// ─── SUMMARY ───────────────────────────────────────────────
+function buildSummary() {
+  const eq = selectedEquip;
+  const rows = [
+    ['สถานที่', eq['สถานที่'] || '–'],
+    ['อุปกรณ์', eq['ชื่ออุปกรณ์'] || '–'],
+    ['หมายเลข', eq['หมายเลข'] || '–'],
+    ['Limit Angular', (eq['Limit Angular'] || '–') + ' mm'],
+    ['Limit Offset', (eq['Limit Offset'] || '–') + ' mm'],
+    ['BV Angular', v('bv-ang') + ' mm'],
+    ['BV Offset', v('bv-off') + ' mm'],
+    ['BH Angular', v('bh-ang') + ' mm'],
+    ['BH Offset', v('bh-off') + ' mm'],
+    ['AV Angular', v('av-ang') + ' mm'],
+    ['AV Offset', v('av-off') + ' mm'],
+    ['AH Angular', v('ah-ang') + ' mm'],
+    ['AH Offset', v('ah-off') + ' mm'],
+  ];
+  document.getElementById('summary-body').innerHTML = rows.map(([k, val]) =>
+    `<div style="display:grid;grid-template-columns:180px 1fr;gap:8px;border-bottom:1px solid var(--border);padding:6px 0;">
+      <span style="color:var(--text2)">${k}</span>
+      <span style="font-family:var(--font-mono)">${val}</span>
+    </div>`
+  ).join('');
+}
+function v(id) { return document.getElementById(id).value || '–'; }
+
+// ─── INSPECTORS / APPROVERS ────────────────────────────────
+async function loadInspectors() {
+  try {
+    const [insp, appr] = await Promise.all([gasCall('getInspectors'), gasCall('getApprovers')]);
+    populateSelect('sel-inspector', insp, 'name', 'EmID');
+    populateSelect('sel-approver', appr, 'name', 'EmID');
+    // Pre-select current user
+    if (currentUser.role === 'inspector') {
+      document.getElementById('sel-inspector').value = currentUser.emId;
+    } else {
+      document.getElementById('sel-approver').value = currentUser.emId;
+    }
+  } catch(e) { console.error(e); }
+}
+function populateSelect(id, data, labelKey, valKey) {
+  const el = document.getElementById(id);
+  el.innerHTML = '<option value="">-- เลือก --</option>' +
+    data.map(d => `<option value="${d[valKey]}">${d[labelKey]} (${d[valKey]})</option>`).join('');
+}
+
+// ─── SUBMIT ────────────────────────────────────────────────
+async function submitRecord() {
+  const eq = selectedEquip;
+  if (!eq) { toast('กรุณาเลือกอุปกรณ์', 'error'); return; }
+
+  const record = {
+    'สถานที่': eq['สถานที่'],
+    'หมายเลข': eq['หมายเลข'],
+    'อุปกรณ์': eq['อุปกรณ์'],
+    'Name_Equipment': eq['ชื่ออุปกรณ์'] || eq.Pump,
+    'Footer_Align': eq['Footer_alig'],
+    'Limit_Angular': eq['Limit Angular'] || eq.Limit_Angular,
+    'Limit_Offset': eq['Limit Offset'] || eq.Limit_Offset,
+    'BVAngular': document.getElementById('bv-ang').value,
+    'BVOffset': document.getElementById('bv-off').value,
+    'BHAngular': document.getElementById('bh-ang').value,
+    'BHOffset': document.getElementById('bh-off').value,
+    'AVAngular': document.getElementById('av-ang').value,
+    'AVOffset': document.getElementById('av-off').value,
+    'AHAngular': document.getElementById('ah-ang').value,
+    'AHOffset': document.getElementById('ah-off').value,
+    'ผู้ตรวจวัด': document.getElementById('sel-inspector').value,
+    'ผู้อนุมัติ': document.getElementById('sel-approver').value,
+    'หมายเหตุ': document.getElementById('remark').value,
+    'Copy_From_Before': 'FALSE',
+  };
+
+  showLoader('กำลังบันทึก...');
+  try {
+    const res = await gasCall('saveAlignmentRecord', record);
+    hideLoader();
+    if (res.ok) {
+      toast(`บันทึกสำเร็จ! ${res.docNo} — ${res.result}`, 'success');
+      resetForm();
+      showPage('dashboard');
+      loadDashboard();
+    } else {
+      toast('เกิดข้อผิดพลาด: ' + (res.message || 'Unknown'), 'error');
+    }
+  } catch(e) {
+    hideLoader();
+    toast('ไม่สามารถบันทึกได้ กรุณาตรวจสอบการเชื่อมต่อ', 'error');
+    console.error(e);
+  }
+}
+
+function resetForm() {
+  selectedEquip = null;
+  currentStep = 1;
+  ['bv-ang','bv-off','bh-ang','bh-off','av-ang','av-off','ah-ang','ah-off'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('equip-info-card').classList.add('hidden');
+  document.getElementById('step1-next').disabled = true;
+  goStep(1);
+}
+
+// ─── OCR via Claude API ─────────────────────────────────────
+async function handleOCR(input, phase) {
+  if (!input.files[0]) return;
+  await processOCRFile(input.files[0], phase);
+}
+async function handleDrop(e, phase) {
+  e.preventDefault();
+  document.getElementById('ocr-drop-' + phase).classList.remove('drag-over');
+  if (e.dataTransfer.files[0]) await processOCRFile(e.dataTransfer.files[0], phase);
+}
+
+async function processOCRFile(file, phase) {
+  const drop = document.getElementById('ocr-drop-' + phase);
+  drop.innerHTML = '<div class="ocr-status"><div class="spinner"></div> กำลังแปลงรูปเป็นตัวเลข...</div>';
+
+  const b64 = await fileToBase64(file);
+  const mimeType = file.type || 'image/jpeg';
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{
+          role: 'user',
+          content: [
+            {
+              type: 'image',
+              source: { type: 'base64', media_type: mimeType, data: b64 }
+            },
+            {
+              type: 'text',
+              text: `This is a ROTALIGN® Ultra iS laser alignment tool screen. Extract the alignment measurement values and return ONLY a JSON object with these exact keys (numbers only, no units):
+{
+  "vertical_angular": <number or null>,
+  "vertical_offset": <number or null>,
+  "horizontal_angular": <number or null>,
+  "horizontal_offset": <number or null>
+}
+Look for the Vertical and Horizontal measurement boxes showing two values each (upper = angular, lower = offset). Return only the JSON, no other text.`
+            }
+          ]
+        }]
+      })
+    });
+
+    const data = await res.json();
+    const text = data.content?.[0]?.text || '';
+    const clean = text.replace(/```json|```/g, '').trim();
+    const vals = JSON.parse(clean);
+
+    const prefix = phase === 'before' ? 'b' : 'a';
+    if (vals.vertical_angular !== null)   document.getElementById(prefix + 'v-ang').value = vals.vertical_angular;
+    if (vals.vertical_offset !== null)    document.getElementById(prefix + 'v-off').value = vals.vertical_offset;
+    if (vals.horizontal_angular !== null) document.getElementById(prefix + 'h-ang').value = vals.horizontal_angular;
+    if (vals.horizontal_offset !== null)  document.getElementById(prefix + 'h-off').value = vals.horizontal_offset;
+
+    liveJudge();
+
+    // Show preview
+    const previewUrl = URL.createObjectURL(file);
+    drop.innerHTML = `
+      <img src="${previewUrl}" class="ocr-preview" alt="preview"/>
+      <div class="ocr-status" style="color:var(--green-text);background:rgba(26,127,60,0.08);border-color:rgba(26,127,60,0.3)">
+        ✅ แปลงข้อมูลสำเร็จ กรุณาตรวจสอบค่าที่กรอก
+      </div>`;
+    toast('OCR สำเร็จ! ตรวจสอบค่าที่กรอกด้วย', 'success');
+
+  } catch(e) {
+    drop.innerHTML = `<div class="ocr-drop-icon">❌</div><div style="font-size:13px;color:var(--red-text)">เกิดข้อผิดพลาด กรุณากรอกข้อมูลเอง</div>`;
+    toast('OCR ไม่สำเร็จ กรุณากรอกเอง: ' + e.message, 'error');
+    console.error(e);
+  }
+}
+
+function fileToBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+// ─── DASHBOARD ─────────────────────────────────────────────
+async function loadDashboard() {
+  try {
+    const stats = await gasCall('getDashboardStats');
+    document.getElementById('stat-total').textContent = stats.total;
+    document.getElementById('stat-ok').textContent = stats.acceptable;
+    document.getElementById('stat-fail').textContent = stats.unacceptable;
+    const rate = stats.total ? Math.round(stats.acceptable / stats.total * 100) : 0;
+    document.getElementById('stat-rate').textContent = rate + '%';
+
+    // Donut
+    const circ = 301.6;
+    const okPct = stats.total ? stats.acceptable / stats.total : 0;
+    const failPct = stats.total ? stats.unacceptable / stats.total : 0;
+    document.getElementById('donut-ok').style.strokeDasharray = `${okPct * circ} ${circ}`;
+    document.getElementById('donut-fail').style.strokeDasharray = `${failPct * circ} ${circ}`;
+    document.getElementById('donut-fail').style.strokeDashoffset = `-${okPct * circ}`;
+    document.getElementById('donut-pct').textContent = rate + '%';
+    document.getElementById('legend-ok').textContent = stats.acceptable;
+    document.getElementById('legend-fail').textContent = stats.unacceptable;
+
+    // Station bars
+    const barsEl = document.getElementById('station-bars');
+    const stations = Object.entries(stats.byStation || {});
+    if (!stations.length) { barsEl.innerHTML = '<div style="color:var(--text3);text-align:center;padding:16px">ไม่มีข้อมูล</div>'; }
+    else {
+      barsEl.innerHTML = stations.map(([s, d]) => {
+        const p = d.total ? Math.round(d.acceptable / d.total * 100) : 0;
+        return `<div class="bar-row">
+          <div class="bar-label"><span>${s}</span><span>${d.acceptable}/${d.total} (${p}%)</span></div>
+          <div class="bar-track">
+            <div class="bar-fill good" style="width:${p}%"></div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    // Recent table
+    renderRecentTable(stats.recent || []);
+
+  } catch(e) { console.error('Dashboard load error:', e); }
+}
+
+function renderRecentTable(rows) {
+  const el = document.getElementById('recent-table');
+  if (!rows.length) { el.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--text3);padding:20px">ไม่มีข้อมูล</td></tr>'; return; }
+  el.innerHTML = rows.map(r => `<tr>
+    <td class="text-mono" style="font-size:12px">${r['เลขที่เอกสาร'] || '–'}</td>
+    <td style="font-size:12px">${r['วันที่'] || '–'}</td>
+    <td><span class="badge badge-blue">${r['สถานที่'] || '–'}</span></td>
+    <td style="font-size:12px">${r['Name_Equipment'] || '–'}</td>
+    <td class="text-mono">${r['AVAngular'] || '–'}</td>
+    <td class="text-mono">${r['AVOffset'] || '–'}</td>
+    <td class="text-mono">${r['AHAngular'] || '–'}</td>
+    <td class="text-mono">${r['AHOffset'] || '–'}</td>
+    <td>${resultBadge(r['สรุปผล'])}</td>
+  </tr>`).join('');
+}
+
+// ─── RECORDS PAGE ───────────────────────────────────────────
+async function loadRecords() {
+  showLoader('กำลังโหลด...');
+  try {
+    allRecords = await gasCall('getAlignmentRecords', {});
+    // Populate station filter
+    const stations = [...new Set(allRecords.map(r => r['สถานที่']).filter(Boolean))];
+    const fSt = document.getElementById('f-station');
+    fSt.innerHTML = '<option value="">📍 ทุกสถานที่</option>' +
+      stations.map(s => `<option value="${s}">${s}</option>`).join('');
+    applyFilters();
+  } catch(e) { console.error(e); toast('โหลดข้อมูลไม่สำเร็จ', 'error'); }
+  hideLoader();
+}
+
+function applyFilters() {
+  const st = document.getElementById('f-station').value;
+  const res = document.getElementById('f-result').value;
+  const q  = (document.getElementById('f-search').value || '').toLowerCase();
+
+  let filtered = allRecords.filter(r => {
+    if (st && r['สถานที่'] !== st) return false;
+    if (res && r['สรุปผล'] !== res) return false;
+    if (q) {
+      const hay = JSON.stringify(r).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+  renderRecordsTable(filtered);
+}
+
+function renderRecordsTable(rows) {
+  const el = document.getElementById('records-table');
+  if (!rows.length) { el.innerHTML = '<tr><td colspan="13" style="text-align:center;color:var(--text3);padding:20px">ไม่พบข้อมูล</td></tr>'; return; }
+  el.innerHTML = rows.map(r => `<tr>
+    <td class="text-mono" style="font-size:11px">${r['เลขที่เอกสาร'] || '–'}</td>
+    <td style="font-size:12px">${r['วันที่'] || '–'}</td>
+    <td><span class="badge badge-blue" style="font-size:10px">${r['สถานที่'] || '–'}</span></td>
+    <td style="font-size:12px">${r['อุปกรณ์'] || '–'}</td>
+    <td style="font-size:12px">${r['Name_Equipment'] || '–'}</td>
+    <td class="text-mono" style="font-size:12px">${r['BVAngular'] || '–'}</td>
+    <td class="text-mono" style="font-size:12px">${r['BVOffset'] || '–'}</td>
+    <td class="text-mono" style="font-size:12px">${r['AVAngular'] || '–'}</td>
+    <td class="text-mono" style="font-size:12px">${r['AVOffset'] || '–'}</td>
+    <td class="text-mono" style="font-size:12px">${r['AHAngular'] || '–'}</td>
+    <td class="text-mono" style="font-size:12px">${r['AHOffset'] || '–'}</td>
+    <td>${resultBadge(r['สรุปผล'])}</td>
+    <td style="font-size:12px">${r['ผู้ตรวจวัด'] || '–'}</td>
+  </tr>`).join('');
+}
+
+function resultBadge(val) {
+  if (val === 'Acceptable') return '<span class="badge badge-green">✅ Acceptable</span>';
+  if (val === 'Unacceptable') return '<span class="badge badge-red">❌ Unacceptable</span>';
+  return '<span class="badge badge-yellow">–</span>';
+}
+
+// ─── GAS HELPER ────────────────────────────────────────────
+async function gasCall(fn, params) {
+  const url = new URL(GAS_URL);
+  url.searchParams.set('fn', fn);
+  const res = await fetch(url.toString(), {
+    method: 'POST',
+    body: JSON.stringify(params || {}),
+    headers: { 'Content-Type': 'application/json' }
+  });
+  const data = await res.json();
+  return data;
+}
+
+// ─── UI HELPERS ────────────────────────────────────────────
+function showLoader(msg) {
+  const el = document.getElementById('loader');
+  el.querySelector('.loader-text').textContent = msg || 'กำลังโหลด...';
+  el.classList.remove('hidden');
+}
+function hideLoader() { document.getElementById('loader').classList.add('hidden'); }
+
+function toast(msg, type = 'success') {
+  const tc = document.getElementById('toasts');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span><span>${msg}</span>`;
+  tc.appendChild(t);
+  setTimeout(() => t.remove(), 4000);
+}
+</script>
+</body>
+</html>
