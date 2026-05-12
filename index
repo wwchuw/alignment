@@ -925,7 +925,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 <script>
 // ─── CONFIG ────────────────────────────────────────────────
 // Replace with your deployed Google Apps Script URL
-const GAS_URL = 'YOUR_GOOGLE_APPS_SCRIPT_DEPLOYMENT_URL';
+const GAS_URL = 'https://script.google.com/a/macros/mwa.co.th/s/AKfycbxtLn5iTP4raX60tOlRbKP0ay5M7BJCaJyC0SBZ34oKIV2OXnhsftnPhP-Zr6p91tc/exec';
 
 // ─── STATE ─────────────────────────────────────────────────
 let currentUser = null;
