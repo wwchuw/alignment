@@ -1180,7 +1180,7 @@ async function submitRecord() {
 
   showLoader('กำลังบันทึก...');
   try {
-    const res = await gasCall('saveAlignmentRecord', record);
+    const res = await gasCall('saveAlignmentRecord', { data: record });
     hideLoader();
     if (res.ok) {
       toast(`บันทึกสำเร็จ! ${res.docNo} — ${res.result}`, 'success');
@@ -1416,13 +1416,29 @@ function resultBadge(val) {
 async function gasCall(fn, params) {
   const url = new URL(GAS_URL);
   url.searchParams.set('fn', fn);
-  const res = await fetch(url.toString(), {
-    method: 'POST',
-    body: JSON.stringify(params || {}),
-    headers: { 'Content-Type': 'application/json' }
-  });
-  const data = await res.json();
-  return data;
+
+  // Pass simple params as query strings
+  if (params) {
+    Object.entries(params).forEach(([k, v]) => {
+      if (v !== undefined && v !== null && v !== '') {
+        if (typeof v === 'object') {
+          url.searchParams.set('data', JSON.stringify(v));
+        } else {
+          url.searchParams.set(k, String(v));
+        }
+      }
+    });
+  }
+
+  // Use GET to avoid CORS preflight issues with Google Apps Script
+  const res = await fetch(url.toString(), { method: 'GET' });
+  const text = await res.text();
+  try {
+    return JSON.parse(text);
+  } catch(e) {
+    console.error('GAS response parse error:', text);
+    throw new Error('Invalid response from server');
+  }
 }
 
 // ─── UI HELPERS ────────────────────────────────────────────
