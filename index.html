@@ -527,7 +527,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 <!-- ═══════════════════════════════════════════════
      LOGIN PAGE
 ════════════════════════════════════════════════ -->
-<div id="login-page" class="hidden">
+<div id="login-page" class="hidden" style="display:none!important">
   <div class="login-card">
     <div class="login-logo">
       <div class="login-logo-icon">⚙️</div>
@@ -575,7 +575,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
     <div class="nav-user">
       <div class="nav-user-badge" id="user-badge">INSPECTOR</div>
       <span id="user-name" style="font-size:13px;color:var(--text2);"></span>
-      <button class="btn btn-secondary btn-sm" onclick="logout()">ออกจากระบบ</button>
+      <button class="btn btn-secondary btn-sm" onclick="logout()" style="display:none">ออกจากระบบ</button>
     </div>
   </nav>
 
@@ -936,13 +936,9 @@ let currentStep = 1;
 
 // ─── INIT ──────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
-  const saved = sessionStorage.getItem('align_user');
-  if (saved) {
-    currentUser = JSON.parse(saved);
-    showApp();
-  } else {
-    showLogin();
-  }
+  // Skip login — go straight to app
+  currentUser = { name: 'ผู้ใช้งาน', role: 'inspector', emId: 'guest' };
+  showApp();
 });
 
 function showLogin() {
