@@ -516,7 +516,7 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 <body>
 
 <!-- ═══ LOADER ═══ -->
-<div class="loader-overlay" id="loader">
+<div class="loader-overlay hidden" id="loader">
   <div class="loader-ring"></div>
   <div class="loader-text">กำลังโหลด...</div>
 </div>
@@ -525,36 +525,9 @@ tr:hover td { background: rgba(255,255,255,0.02); }
 <div class="toast-container" id="toasts"></div>
 
 <!-- ═══════════════════════════════════════════════
-     LOGIN PAGE
-════════════════════════════════════════════════ -->
-<div id="login-page" class="hidden" style="display:none!important">
-  <div class="login-card">
-    <div class="login-logo">
-      <div class="login-logo-icon">⚙️</div>
-      <div class="login-logo-text">
-        <h1>Alignment Record</h1>
-        <p>MWA · FR-BK-9070-WPS1</p>
-      </div>
-    </div>
-    <div class="login-subtitle">เข้าสู่ระบบ</div>
-    <div class="login-desc">ใช้รหัสพนักงาน (EmID) และรหัสผ่านของคุณ</div>
-    <div class="form-group">
-      <label class="form-label">รหัสพนักงาน (EmID)</label>
-      <input type="text" class="form-input" id="login-emid" placeholder="เช่น EMP001" autocomplete="username"/>
-    </div>
-    <div class="form-group">
-      <label class="form-label">รหัสผ่าน</label>
-      <input type="password" class="form-input" id="login-pw" placeholder="••••••••" autocomplete="current-password"/>
-    </div>
-    <button class="btn btn-primary" id="login-btn" onclick="doLogin()">เข้าสู่ระบบ</button>
-    <div id="login-error" class="error-msg hidden"></div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
      MAIN APP
 ════════════════════════════════════════════════ -->
-<div id="app" class="hidden">
+<div id="app">
   <!-- Top Nav -->
   <nav class="topnav">
     <div class="nav-brand">
@@ -950,8 +923,6 @@ function showLogin() {
 }
 
 function showApp() {
-  document.getElementById('login-page').classList.add('hidden');
-  document.getElementById('app').classList.remove('hidden');
   document.getElementById('user-name').textContent = currentUser.name;
   document.getElementById('user-badge').textContent = currentUser.role === 'approver' ? 'APPROVER' : 'INSPECTOR';
   document.getElementById('loader').classList.add('hidden');
